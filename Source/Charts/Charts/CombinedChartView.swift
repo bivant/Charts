@@ -202,6 +202,12 @@ open class CombinedChartView: BarLineChartViewBase, CombinedChartDataProvider
     
     /// `true` the highlight is be full-bar oriented, `false` ifsingle-value
     open var isHighlightFullBarEnabled: Bool { return highlightFullBarEnabled }
+
+    @objc open var barCornerRadius: CGFloat
+        {
+        get { return (renderer as! CombinedChartRenderer).barCornerRadius }
+        set { (renderer as! CombinedChartRenderer).barCornerRadius = newValue }
+    }
     
     // MARK: - ChartViewBase
     
