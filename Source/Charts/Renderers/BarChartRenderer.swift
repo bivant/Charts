@@ -507,11 +507,11 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             }
             else
             {
+				context.fill(barRectInsideOutline)
                 if drawBorder
                 {
                     context.stroke(barRectInsideOutline)
                 }
-                context.fill(barRectInsideOutline)
             }
 
 			context.restoreGState()
