@@ -26,4 +26,6 @@ public protocol BarChartDataProvider: BarLineScatterCandleBubbleChartDataProvide
     /// distance from top (bottom in negative) for values drawn outside/inside the bar
     var valuesOffset: CGFloat { get }
     var isHighlightFullBarEnabled: Bool { get }
+
+    var barCornerRadius: CGFloat { get set }
 }

@@ -25,6 +25,8 @@ open class CombinedChartRenderer: DataRenderer
     /// distance from top (bottom in negative) for values drawn outside/inside the bar
     @objc open var valuesOffset: CGFloat = 4.5
     
+    @objc open var barCornerRadius: CGFloat = 0.0
+
     /// if set to true, a grey area is drawn behind each bar that indicates the maximum value
     @objc open var drawBarShadowEnabled = false
     

@@ -372,7 +372,16 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 _barShadowRectBuffer.size.height = viewPortHandler.contentHeight
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(_barShadowRectBuffer)
+
+                let cornerRadius = dataProvider.barCornerRadius
+                if cornerRadius != 0 {
+                    let clipPath = UIBezierPath(roundedRect: _barShadowRectBuffer, cornerRadius: cornerRadius).cgPath
+
+                    context.addPath(clipPath)
+                    context.fillPath()
+                } else {
+                    context.fill(_barShadowRectBuffer)
+                }
             }
         }
 
@@ -396,7 +405,16 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 }
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
-                context.fill(barRect)
+
+                let cornerRadius = dataProvider.barCornerRadius
+                if cornerRadius != 0 {
+                    let clipPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius).cgPath
+
+                    context.addPath(clipPath)
+                    context.fillPath()
+                } else {
+                    context.fill(barRect)
+                }
             }
         }
         
@@ -436,9 +454,10 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 barFillColor = dataSet.color(atIndex: j)
             }
 
-			context.saveGState()
+            context.saveGState()
 
             var maxEdgeInset: NSUIEdgeInsets = .zero
+            let cornerRadius = dataProvider.barCornerRadius
 
             for outline in dataSet.barValueOutlines
             {
@@ -450,21 +469,50 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 }
                 let outlineRect = barRect.inset(by: maxEdgeInset)
                 context.setFillColor(outline.color.cgColor)
-                context.fill(outlineRect)
+                if cornerRadius != 0
+                {
+                    let outlineClipPath = UIBezierPath(roundedRect: outlineRect, cornerRadius: cornerRadius).cgPath
+                    context.addPath(outlineClipPath)
+                    context.fillPath()
+                }
+                else
+                {
+                    context.fill(outlineRect)
+                }
 
                 maxEdgeInset = newMaxEdgeInset
             }
 
             let barRectInsideOutline = barRect.inset(by: maxEdgeInset)
+
             if drawBorder
             {
                 context.setStrokeColor(borderColor.cgColor)
                 context.setLineWidth(borderWidth)
-                context.stroke(barRectInsideOutline)
             }
-
             context.setFillColor(barFillColor.cgColor)
-            context.fill(barRectInsideOutline)
+
+            if cornerRadius != 0
+            {
+                let barClipPath = UIBezierPath(roundedRect: barRectInsideOutline, cornerRadius: cornerRadius).cgPath
+                context.addPath(barClipPath)
+                if drawBorder && borderWidth < barRect.height   //do not draw a border if it bigger that content
+                {
+                    context.drawPath(using: .fillStroke)
+                }
+                else
+                {
+                    context.fillPath()
+                }
+            }
+            else
+            {
+                if drawBorder
+                {
+                    context.stroke(barRectInsideOutline)
+                }
+                context.fill(barRectInsideOutline)
+            }
 
 			context.restoreGState()
 
@@ -876,7 +924,17 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
                 
-                context.fill(barRect)
+                let cornerRadius = dataProvider.barCornerRadius
+                if cornerRadius != 0
+                {
+                    let clipPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius).cgPath
+                    context.addPath(clipPath)
+                    context.fillPath()
+                }
+                else
+                {
+                    context.fill(barRect)
+                }
             }
         }
         
