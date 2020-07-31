@@ -40,7 +40,8 @@ class BarChartViewController: DemoBaseViewController {
                         .saveToGallery,
                         .togglePinchZoom,
                         .toggleData,
-                        .toggleBarBorders]
+                        .toggleBarBorders,
+                        .toggleBarOutline]
         
         self.setup(barLineChartView: chartView)
         

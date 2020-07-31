@@ -52,7 +52,8 @@ enum Option {
 	case toggleValuesSideFlexible
     case toggleValueColorsAdjustment
     case toggleValueColorsSecondary
-    
+    case toggleBarOutline
+
     var label: String {
         switch self {
         case .toggleValues: return "Toggle Y-Values"
@@ -95,6 +96,7 @@ enum Option {
 		case .toggleValuesSideFlexible: return "Toggle Y-Values Flexible Side"
         case .toggleValueColorsAdjustment: return "Toggle Y-Values Color Adjustment"
         case .toggleValueColorsSecondary: return "Toggle Y-Values Secondary Color"
+        case .toggleBarOutline: return "Toggle Bar Outline"
         }
     }
 }
@@ -201,7 +203,26 @@ class DemoBaseViewController: UIViewController, ChartViewDelegate {
                 if set.valueColorsSecondary.isEmpty {
                     set.valueTextColorSecondary = .black
                 } else {
-                    set.resetValueSecondaryColors()
+					set.resetValueSecondaryColors()
+				}
+			}
+			chartView.setNeedsDisplay()
+
+		case .toggleBarOutline:
+            let outline1 = BarChartBarValueOutline(color:NSUIColor.magenta)
+            outline1.insets.top = 5
+            outline1.insets.left = 7
+            outline1.insets.bottom = 2
+            outline1.insets.right = 5
+            let outline2 = BarChartBarValueOutline(color:NSUIColor.brown)
+            outline2.insets.top = 4
+            outline2.insets.left = 3
+            outline2.insets.bottom = 6
+            outline2.insets.right = 12
+
+            for set in chartView.data!.dataSets {
+                if let set = set as? BarChartDataSet {
+                    set.barValueOutlines = [outline1, outline2]
                 }
             }
             chartView.setNeedsDisplay()
