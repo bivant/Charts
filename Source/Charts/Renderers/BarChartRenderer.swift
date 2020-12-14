@@ -468,7 +468,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             let valueOffsetPlus: CGFloat = dataProvider.valuesOffset
             var posOffset: CGFloat
             var negOffset: CGFloat
-			var posOffsetSideFallback: CGFloat
+            var posOffsetSideFallback: CGFloat
             var negOffsetSideFallback: CGFloat
             let drawValueAboveBar = dataProvider.isDrawValueAboveBarEnabled
             let chartBackgroundColor = NSUIColor.white //TODO: get the actual chart background color
@@ -488,14 +488,14 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 let valueFont = dataSet.valueFont
                 let valueTextHeight = valueFont.lineHeight
                 posOffset = (drawValueAboveBar ? -(valueTextHeight + valueOffsetPlus) : valueOffsetPlus)
-				posOffsetSideFallback = (!drawValueAboveBar ? -(valueTextHeight + valueOffsetPlus) : valueOffsetPlus)
+                posOffsetSideFallback = (!drawValueAboveBar ? -(valueTextHeight + valueOffsetPlus) : valueOffsetPlus)
                 negOffset = (drawValueAboveBar ? valueOffsetPlus : -(valueTextHeight + valueOffsetPlus))
                 negOffsetSideFallback = (!drawValueAboveBar ? valueOffsetPlus : -(valueTextHeight + valueOffsetPlus))
                 
                 if isInverted
                 {
                     posOffset = -posOffset - valueTextHeight
-					posOffsetSideFallback = -posOffsetSideFallback - valueTextHeight
+                    posOffsetSideFallback = -posOffsetSideFallback - valueTextHeight
                     negOffset = -negOffset - valueTextHeight
                     negOffsetSideFallback = -negOffsetSideFallback - valueTextHeight
                 }
@@ -624,8 +624,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 // if only single values are drawn (sum)
                 if !dataSet.isStacked
                 {
-                    let range = 0 ..< Int(ceil(Double(dataSet.entryCount) * animator.phaseX))
-                    for j in range
+                    for j in 0 ..< Int(ceil(Double(dataSet.entryCount) * animator.phaseX))
                     {
                         guard let e = dataSet.entryForIndex(j) as? BarChartDataEntry else { continue }
                         
@@ -690,8 +689,8 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                 if value == 0.0 && (posY == 0.0 || negY == 0.0)
                                 {
                                     // Take care of the situation of a 0.0 value, which overlaps a non-zero bar
-									//https://github.com/danielgindi/Charts/issues/1191
-									//https://github.com/danielgindi/Charts/pull/1195
+                                    //https://github.com/danielgindi/Charts/issues/1191
+                                    //https://github.com/danielgindi/Charts/pull/1195
 //                                    y = value
                                 }
                                 else if value >= 0.0

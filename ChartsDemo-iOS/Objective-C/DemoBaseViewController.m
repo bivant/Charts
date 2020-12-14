@@ -172,9 +172,9 @@
 
     if ([key isEqualToString:@"toggleValueColorsAdjustment"])
     {
-        for (id<IBarChartDataSet, NSObject> set in chartView.data.dataSets)
+        for (id<BarChartDataSetProtocol, NSObject> set in chartView.data.dataSets)
         {
-            if ([set conformsToProtocol:@protocol(IBarChartDataSet)])
+            if ([set conformsToProtocol:@protocol(BarChartDataSetProtocol)])
             {
                 set.valueColorsAdjustment = !set.valueColorsAdjustment;
             }
@@ -185,7 +185,7 @@
 
     if ([key isEqualToString:@"toggleValueColorsSecondary"])
     {
-		for (id<IBarChartDataSet, NSObject> set in chartView.data.dataSets)
+		for (id<BarChartDataSetProtocol, NSObject> set in chartView.data.dataSets)
 		{
 			if ([set conformsToProtocol:@protocol(IBarChartDataSet)])
 			{
@@ -211,9 +211,9 @@
         inset.right = 3;
         BarChartBarValueOutline *outline2 = [[BarChartBarValueOutline alloc] initWithColor:[UIColor colorWithRed:0.2 green:0.32 blue:0.6 alpha:1] insets:inset];
 
-        for (id<IBarChartDataSet, NSObject> set in chartView.data.dataSets)
+        for (id<BarChartDataSetProtocol, NSObject> set in chartView.data.dataSets)
         {
-            if ([set conformsToProtocol:@protocol(IBarChartDataSet)])
+            if ([set conformsToProtocol:@protocol(BarChartDataSetProtocol)])
             {
                 set.barValueOutlines = @[outline1, outline2];
             }
