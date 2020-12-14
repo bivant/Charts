@@ -26,7 +26,8 @@ open class CombinedChartRenderer: NSObject, DataRenderer
     @objc open var drawValueAboveBarEnabled = true
     
     @objc open var barCornerRadius: CGFloat = 0.0
-
+    @objc open var barCornerFactor: CGFloat = 0.0
+    
     /// if set to true, a grey area is drawn behind each bar that indicates the maximum value
     @objc open var drawBarShadowEnabled = false
     

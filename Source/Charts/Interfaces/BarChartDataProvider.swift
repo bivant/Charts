@@ -22,4 +22,5 @@ public protocol BarChartDataProvider: BarLineScatterCandleBubbleChartDataProvide
     var isHighlightFullBarEnabled: Bool { get }
 
     var barCornerRadius: CGFloat { get set }
+    var barCornerFactor: CGFloat { get set }
 }

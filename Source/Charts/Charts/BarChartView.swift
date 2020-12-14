@@ -19,7 +19,9 @@ open class BarChartView: BarLineChartViewBase, BarChartDataProvider
     private var _drawValueAboveBarEnabled = true
 
     private var _barCornerRadius: CGFloat = 0.0
-
+    
+    private var _barCornerFactor: CGFloat = 0.0
+    
     /// if set to true, a grey area is drawn behind each bar that indicates the maximum value
     private var _drawBarShadowEnabled = false
     
@@ -182,6 +184,16 @@ open class BarChartView: BarLineChartViewBase, BarChartDataProvider
         set
         {
             _barCornerRadius = newValue
+            setNeedsDisplay()
+        }
+    }
+    
+    @objc open var barCornerFactor: CGFloat
+    {
+        get { return _barCornerFactor }
+        set
+        {
+            _barCornerFactor = max(min(newValue, 1), 0)
             setNeedsDisplay()
         }
     }

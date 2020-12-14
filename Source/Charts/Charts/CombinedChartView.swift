@@ -209,6 +209,12 @@ open class CombinedChartView: BarLineChartViewBase, CombinedChartDataProvider
         set { (renderer as! CombinedChartRenderer).barCornerRadius = newValue }
     }
     
+    @objc open var barCornerFactor: CGFloat
+    { 
+        get { return (renderer as! CombinedChartRenderer).barCornerFactor }
+        set { (renderer as! CombinedChartRenderer).barCornerFactor = max(min(newValue, 1), 0) }
+    }
+    
     // MARK: - ChartViewBase
     
     /// draws all MarkerViews on the highlighted positions

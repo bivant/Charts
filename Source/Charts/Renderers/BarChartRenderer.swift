@@ -338,13 +338,17 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 context.setFillColor(dataSet.barShadowColor.cgColor)
 
-                let cornerRadius = dataProvider.barCornerRadius
-                if cornerRadius != 0 {
+                let halfWidth = CGFloat(_barShadowRectBuffer.width / 2.0)
+                let cornerRadius = min(halfWidth, dataProvider.barCornerRadius + halfWidth * dataProvider.barCornerFactor)
+                if cornerRadius > 0.1
+                {
                     let clipPath = UIBezierPath(roundedRect: _barShadowRectBuffer, cornerRadius: cornerRadius).cgPath
 
                     context.addPath(clipPath)
                     context.fillPath()
-                } else {
+                }
+                else
+                {
                     context.fill(_barShadowRectBuffer)
                 }
             }
@@ -382,8 +386,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setLineWidth(borderWidth)
             }
 
-            let cornerRadius = dataProvider.barCornerRadius
-            if cornerRadius != 0
+            let halfWidth = CGFloat(barRect.width / 2.0)
+            let cornerRadius = min(halfWidth, dataProvider.barCornerRadius + halfWidth * dataProvider.barCornerFactor)
+            if cornerRadius > 0.1
             {
                 let barClipPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius).cgPath
                 context.addPath(barClipPath)
@@ -760,8 +765,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
                 
-                let cornerRadius = dataProvider.barCornerRadius
-                if cornerRadius != 0
+                let halfWidth = CGFloat(barRect.width / 2.0)
+                let cornerRadius = min(halfWidth, dataProvider.barCornerRadius + halfWidth * dataProvider.barCornerFactor)
+                if cornerRadius >= 0.1
                 {
                     let clipPath = UIBezierPath(roundedRect: barRect, cornerRadius: cornerRadius).cgPath
                     context.addPath(clipPath)
