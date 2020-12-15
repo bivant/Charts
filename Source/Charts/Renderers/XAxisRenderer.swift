@@ -19,6 +19,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
     public let viewPortHandler: ViewPortHandler
     public let axis: XAxis
     public let transformer: Transformer?
+	public var gridLinesInsets: NSUIEdgeInsets = .zero
 
     @objc public init(viewPortHandler: ViewPortHandler, axis: XAxis, transformer: Transformer?)
     {
@@ -383,6 +384,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
         let dx = self.axis.gridLineWidth
         contentRect.origin.x -= dx / 2.0
         contentRect.size.width += dx
+		contentRect = contentRect.inset(by: gridLinesInsets)
         return contentRect
     }
     
@@ -391,8 +393,8 @@ open class XAxisRenderer: NSObject, AxisRenderer
         guard x >= viewPortHandler.offsetLeft && x <= viewPortHandler.chartWidth else { return }
 
         context.beginPath()
-        context.move(to: CGPoint(x: x, y: viewPortHandler.contentTop))
-        context.addLine(to: CGPoint(x: x, y: viewPortHandler.contentBottom))
+		context.move(to: CGPoint(x: x, y: viewPortHandler.contentTop + gridLinesInsets.top))
+		context.addLine(to: CGPoint(x: x, y: viewPortHandler.contentBottom - gridLinesInsets.bottom))
         context.strokePath()
     }
     
