@@ -178,23 +178,23 @@ open class XAxisRenderer: NSObject, AxisRenderer
             else { return }
 
         let yOffset = axis.yOffset
-        
+		let anchorX = CGFloat(axis.labelAlignment.rawValue) / 2.0
         switch axis.labelPosition {
         case .top:
-            drawLabels(context: context, pos: viewPortHandler.contentTop - yOffset, anchor: CGPoint(x: 0.5, y: 1.0))
+            drawLabels(context: context, pos: viewPortHandler.contentTop - yOffset, anchor: CGPoint(x: anchorX, y: 1.0))
 
         case .topInside:
-            drawLabels(context: context, pos: viewPortHandler.contentTop + yOffset + axis.labelRotatedHeight, anchor: CGPoint(x: 0.5, y: 1.0))
+            drawLabels(context: context, pos: viewPortHandler.contentTop + yOffset + axis.labelRotatedHeight, anchor: CGPoint(x: anchorX, y: 1.0))
 
         case .bottom:
-            drawLabels(context: context, pos: viewPortHandler.contentBottom + yOffset, anchor: CGPoint(x: 0.5, y: 0.0))
+            drawLabels(context: context, pos: viewPortHandler.contentBottom + yOffset, anchor: CGPoint(x: anchorX, y: 0.0))
 
         case .bottomInside:
-            drawLabels(context: context, pos: viewPortHandler.contentBottom - yOffset - axis.labelRotatedHeight, anchor: CGPoint(x: 0.5, y: 0.0))
+			drawLabels(context: context, pos: viewPortHandler.contentBottom - yOffset - axis.labelRotatedHeight, anchor: CGPoint(x: anchorX, y: 0.0))
 
         case .bothSided:
-            drawLabels(context: context, pos: viewPortHandler.contentTop - yOffset, anchor: CGPoint(x: 0.5, y: 1.0))
-            drawLabels(context: context, pos: viewPortHandler.contentBottom + yOffset, anchor: CGPoint(x: 0.5, y: 0.0))
+            drawLabels(context: context, pos: viewPortHandler.contentTop - yOffset, anchor: CGPoint(x: anchorX, y: 1.0))
+            drawLabels(context: context, pos: viewPortHandler.contentBottom + yOffset, anchor: CGPoint(x: anchorX, y: 0.0))
         }
     }
     
@@ -275,6 +275,10 @@ open class XAxisRenderer: NSObject, AxisRenderer
             let px = isCenteringEnabled ? CGFloat(axis.centeredEntries[i]) : CGFloat(entries[i])
             position = CGPoint(x: px, y: 0)
                 .applying(valueToPixelMatrix)
+			if axis.labelXOffset != 0
+			{
+				position = position.applying(CGAffineTransform.identity.translatedBy(x: axis.labelXOffset, y: 0))
+			}
 
             guard viewPortHandler.isInBoundsX(position.x) else { continue }
             

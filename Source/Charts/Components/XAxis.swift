@@ -24,6 +24,14 @@ open class XAxis: AxisBase
         case topInside
         case bottomInside
     }
+
+	@objc(XAxisLabelAlignment)
+	public enum LabelAlignment: Int
+	{
+		case left = 0
+		case center = 1
+		case right = 2
+	}
     
     /// width of the x-axis labels in pixels - this is automatically calculated by the `computeSize()` methods in the renderers
     @objc open var labelWidth = CGFloat(1.0)
@@ -45,7 +53,13 @@ open class XAxis: AxisBase
     
     /// the position of the x-labels relative to the chart
     @objc open var labelPosition = LabelPosition.top
-    
+
+	/// the alignment of the x-labels relative to the x-values
+	@objc open var labelAlignment = LabelAlignment.center
+
+	/// the offset of the x-labels relative along the axe
+	@objc open var labelXOffset = CGFloat(0.0)
+
     /// if set to true, word wrapping the labels will be enabled.
     /// word wrapping is done using `(value width * labelRotatedWidth)`
     ///
