@@ -19,7 +19,8 @@ open class YAxisRenderer: NSObject, AxisRenderer
     public let viewPortHandler: ViewPortHandler
     public let axis: YAxis
     public let transformer: Transformer?
-
+    public var relativeLabelsAlignment = true
+    
     @objc public init(viewPortHandler: ViewPortHandler, axis: YAxis, transformer: Transformer?)
     {
         self.viewPortHandler = viewPortHandler
@@ -44,7 +45,7 @@ open class YAxisRenderer: NSObject, AxisRenderer
         let labelPosition = axis.labelPosition
         
         let xPos: CGFloat
-        let textAlign: NSTextAlignment
+        var textAlign: NSTextAlignment
         
         if dependency == .left
         {
@@ -71,6 +72,11 @@ open class YAxisRenderer: NSObject, AxisRenderer
                 textAlign = .right
                 xPos = viewPortHandler.contentRight - xoffset
             }
+        }
+        
+        if !relativeLabelsAlignment
+        {
+            textAlign = axis.labelAlignment
         }
         
         drawYLabels(context: context,
