@@ -277,7 +277,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         for i in barData.indices
         {
             guard let set = barData[i] as? BarChartDataSetProtocol else {
-                fatalError("Datasets for BarChartRenderer must conform to IBarChartDataset")
+                fatalError("Datasets for BarChartRenderer must conform to BarChartDataSetProtocol")
             }
 
             guard set.isVisible else { continue }
