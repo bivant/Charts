@@ -408,12 +408,13 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             // Create and append the corresponding accessibility element to accessibilityOrderedElements
             if let chart = dataProvider as? BarChartView
             {
-                let element = createAccessibleElement(withIndex: j,
-                                                      container: chart,
-                                                      dataSet: dataSet,
-                                                      dataSetIndex: index,
-                                                      stackSize: stackSize)
-                { (element) in
+                let element = createAccessibleElement(
+                    withIndex: j,
+                    container: chart,
+                    dataSet: dataSet,
+                    dataSetIndex: index,
+                    stackSize: stackSize
+                ) { (element) in
                     element.accessibilityFrame = barRect
                 }
 
@@ -553,8 +554,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                     // if we have stacks
                     
                     var bufferIndex = 0
-                    
-                    for index in 0 ..< Int(ceil(Double(dataSet.entryCount) * animator.phaseX))
+                    let lastIndex = ceil(Double(dataSet.entryCount) * animator.phaseX)
+
+                    for index in 0 ..< Int(lastIndex)
                     {
                         guard let e = dataSet.entryForIndex(index) as? BarChartDataEntry else { continue }
                         
@@ -565,7 +567,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                         let x = rect.origin.x + rect.size.width / 2.0
                         
                         // we still draw stacked bars, but there is one non-stacked in between
-                        if let vals = vals
+                        if let values = vals
                         {
                             // draw stack values
                             var transformed = [CGPoint]()
@@ -573,11 +575,10 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                             var posY = 0.0
                             var negY = -e.negativeSum
 
-                            for k in vals.indices
+                            for value in values
                             {
-                                let value = vals[k]
-                                var y: Double
-
+                                let y: Double
+                                
                                 if value == 0.0 && (posY == 0.0 || negY == 0.0)
                                 {
                                     // Take care of the situation of a 0.0 value, which overlaps a non-zero bar
@@ -599,9 +600,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
 
                             trans.pointValuesToPixel(&transformed)
 
-                            for (val, transformed) in zip(vals, transformed)
+                            for (value, transformed) in zip(values, transformed)
                             {
-                                let drawBelow = (val == 0.0 && negY == 0.0 && posY > 0.0) || val < 0.0
+                                let drawBelow = (value == 0.0 && negY == 0.0 && posY > 0.0) || value < 0.0
                                 let y = transformed.y + (drawBelow ? negOffset : posOffset)
 
                                 guard viewPortHandler.isInBoundsRight(x) else { break }
@@ -614,7 +615,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                                     drawValue(
                                         context: context,
                                         value: formatter.stringForValue(
-                                            val,
+                                            value,
                                             entry: e,
                                             dataSetIndex: dataSetIndex,
                                             viewPortHandler: viewPortHandler),
@@ -684,7 +685,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
     }
     
     /// Draws a value at the specified x and y position.
-    @objc open func drawValue(context: CGContext, value: String, xPos: CGFloat, yPos: CGFloat, font: NSUIFont, align: NSTextAlignment, color: NSUIColor, anchor: CGPoint, angleRadians: CGFloat)
+    @objc open func drawValue(context: CGContext, value: String, xPos: CGFloat, yPos: CGFloat, font: NSUIFont, align: TextAlignment, color: NSUIColor, anchor: CGPoint, angleRadians: CGFloat)
     {
         if (angleRadians == 0.0)
         {
