@@ -187,7 +187,7 @@
     {
 		for (id<BarChartDataSetProtocol, NSObject> set in chartView.data.dataSets)
 		{
-			if ([set conformsToProtocol:@protocol(IBarChartDataSet)])
+			if ([set conformsToProtocol:@protocol(BarChartDataSetProtocol)])
 			{
 				if (set.valueColorsSecondary.count == 0)
 				{
