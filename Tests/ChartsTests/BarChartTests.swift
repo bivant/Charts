@@ -604,7 +604,7 @@ class BarChartTests: XCTestCase {
         dataSet.barValueOutlines = [outline1, outline2]
 
         let chart = setupDefaultChart(dataSets: [dataSet])
-        ChartsSnapshotVerifyView(chart, identifier: Snapshot.identifier(UIScreen.main.bounds.size), overallTolerance: Snapshot.tolerance)
+        assertChartSnapshot(matching: chart)
     }
 
     func testOutlinesWide()
@@ -625,7 +625,7 @@ class BarChartTests: XCTestCase {
         dataSet.barValueOutlines = [outline1, outline2]
 
         let chart = setupDefaultChart(dataSets: [dataSet])
-        ChartsSnapshotVerifyView(chart, identifier: Snapshot.identifier(UIScreen.main.bounds.size), overallTolerance: Snapshot.tolerance)
+        assertChartSnapshot(matching: chart)
     }
 
     func testOutlinesNarrowValues()
@@ -648,7 +648,7 @@ class BarChartTests: XCTestCase {
         dataSet.drawValuesEnabled = true
         chart.drawValueAboveBarEnabled = false
         chart.notifyDataSetChanged()
-        ChartsSnapshotVerifyView(chart, identifier: Snapshot.identifier(UIScreen.main.bounds.size), overallTolerance: Snapshot.tolerance)
+        assertChartSnapshot(matching: chart)
     }
 
     func testOutlinesWideValues()
@@ -671,7 +671,7 @@ class BarChartTests: XCTestCase {
         dataSet.drawValuesEnabled = true
         chart.drawValueAboveBarEnabled = false
         chart.notifyDataSetChanged()
-        ChartsSnapshotVerifyView(chart, identifier: Snapshot.identifier(UIScreen.main.bounds.size), overallTolerance: Snapshot.tolerance)
+        assertChartSnapshot(matching: chart)
     }
 
     func testOutlinesStacked()
@@ -692,7 +692,7 @@ class BarChartTests: XCTestCase {
         dataSet.barValueOutlines = [outline1, outline2]
 
         let chart = setupDefaultChart(dataSets: [dataSet])
-        ChartsSnapshotVerifyView(chart, identifier: Snapshot.identifier(UIScreen.main.bounds.size), overallTolerance: Snapshot.tolerance)
+        assertChartSnapshot(matching: chart)
     }
 
     func testOutlinesStackedBordered()
@@ -718,7 +718,7 @@ class BarChartTests: XCTestCase {
         let chart = setupDefaultChart(dataSets: [dataSet])
         chart.drawBordersEnabled = true
         chart.notifyDataSetChanged()
-        ChartsSnapshotVerifyView(chart, identifier: Snapshot.identifier(UIScreen.main.bounds.size), overallTolerance: Snapshot.tolerance)
+        assertChartSnapshot(matching: chart)
     }
 
 }
