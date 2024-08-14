@@ -572,6 +572,7 @@
 				D2C26AC015E753014C7571E4 /* Tests */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		8C531E3F3C3DE5843C93C3DA /* Charts */ = {
 			isa = PBXGroup;
