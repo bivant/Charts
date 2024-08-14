@@ -1,4 +1,4 @@
-@testable import Charts
+@testable import DGCharts
 import SnapshotTesting
 import XCTest
 
@@ -7,6 +7,9 @@ class BarChartTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+		
+		// Set to `true` to re-capture all snapshots
+		isRecording = false
     }
 
     override func tearDown() {
