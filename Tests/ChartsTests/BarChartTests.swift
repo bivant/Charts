@@ -1,4 +1,4 @@
-@testable import Charts
+@testable import DGCharts
 import SnapshotTesting
 import XCTest
 
@@ -7,6 +7,9 @@ class BarChartTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+		
+		// Set to `true` to re-capture all snapshots
+		isRecording = false
     }
 
     override func tearDown() {
@@ -326,8 +329,7 @@ class BarChartTests: XCTestCase {
         assertChartSnapshot(matching: chart)
     }
 
-    func testDefaultNotDrawValueAboveBarsFlexibleSecondaryColor()
-    {
+    func testDefaultNotDrawValueAboveBarsFlexibleSecondaryColor() {
         let dataEntries = setupDefaultValuesDataEntries()
         let dataSet = setupDefaultDataSet(chartDataEntries: dataEntries)
         dataSet.valueTextColorSecondary = .red
@@ -470,8 +472,7 @@ class BarChartTests: XCTestCase {
         assertChartSnapshot(matching: chart)
     }
 
-    func testStackedAndStackSinglesNotDrawValueAboveBarsFlexibleInvertColors()
- {
+    func testStackedAndStackSinglesNotDrawValueAboveBarsFlexibleInvertColors() {
         let dataEntries = setupStackedValuesWithSinglesDataEntries()
         let dataSet = setupDefaultStackedDataSet(chartDataEntries: dataEntries)
         dataSet.valueColors = dataSet.colors
@@ -586,23 +587,44 @@ class BarChartTests: XCTestCase {
         assertChartSnapshot(matching: chart)
     }
 
-    func testOutlinesNarrow()
+    func testOutlinesNarrowWithTooBigInsets()
     {
         let dataEntries = setupDefaultValuesDataEntries()
         let dataSet = setupDefaultDataSet(chartDataEntries: dataEntries)
 
-        let outline1 = BarChartBarValueOutline(color: .magenta)//NSUIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 1.0))
+        let outline1 = BarChartBarValueOutline(color: .magenta)
         outline1.insets.top = 5
         outline1.insets.left = 7
         outline1.insets.bottom = 2
         outline1.insets.right = 5
-        let outline2 = BarChartBarValueOutline(color: .brown)//NSUIColor(red: 241/255.0, green: 196/255.0, blue: 15/255.0, alpha: 1.0))
+        let outline2 = BarChartBarValueOutline(color: .brown)
         outline2.insets.top = 4
         outline2.insets.left = 3
         outline2.insets.bottom = 6
         outline2.insets.right = 12
         dataSet.barValueOutlines = [outline1, outline2]
 
+        let chart = setupDefaultChart(dataSets: [dataSet])
+        assertChartSnapshot(matching: chart)
+    }
+    
+    func testOutlinesNarrowWithNormalInsets()
+    {
+        let dataEntries = setupDefaultValuesDataEntries()
+        let dataSet = setupDefaultDataSet(chartDataEntries: dataEntries)
+        
+        let outline1 = BarChartBarValueOutline(color: .magenta)
+        outline1.insets.top = 5
+        outline1.insets.left = 2
+        outline1.insets.bottom = 2
+        outline1.insets.right = 5
+        let outline2 = BarChartBarValueOutline(color: .brown)
+        outline2.insets.top = 4
+        outline2.insets.left = 3
+        outline2.insets.bottom = 6
+        outline2.insets.right = 12
+        dataSet.barValueOutlines = [outline1, outline2]
+        
         let chart = setupDefaultChart(dataSets: [dataSet])
         assertChartSnapshot(matching: chart)
     }

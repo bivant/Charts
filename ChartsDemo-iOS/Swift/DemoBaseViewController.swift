@@ -9,7 +9,7 @@
 #if canImport(UIKit)
     import UIKit
 #endif
-import Charts
+import DGCharts
 
 enum Option {
     case toggleValues
@@ -226,14 +226,14 @@ class DemoBaseViewController: UIViewController, ChartViewDelegate {
             outline2.insets.bottom = 6
             outline2.insets.right = 12
 
-            for set in chartView.data?.dataSets ?? [] {
-                if let set = set as? BarChartDataSet {
+            for set in chartView.data!.dataSets {
+				if let set = set as? BarChartDataSet {
 					if set.barValueOutlines.isEmpty {
 						set.barValueOutlines = [outline1, outline2]
 					} else {
 						set.barValueOutlines = [BarChartBarValueOutline]()
 					}
-                }
+				}
             }
             chartView.setNeedsDisplay()
 
@@ -398,10 +398,10 @@ extension DemoBaseViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if optionsTableView != nil {
-            return 40.0;
+            return 40.0
         }
         
-        return 44.0;
+        return 44.0
     }
     
     @available(iOS 2.0, *)
@@ -422,10 +422,8 @@ extension DemoBaseViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if optionsTableView != nil {
             tableView.deselectRow(at: indexPath, animated: true)
-            
             optionsTableView?.removeFromSuperview()
             self.optionsTableView = nil
-            
             self.optionTapped(self.options[indexPath.row])
         }
         
